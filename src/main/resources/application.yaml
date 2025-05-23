@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: queryDistribution
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/dqs}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
