@@ -1,6 +1,10 @@
 spring:
   application:
     name: testApp
+  data:
+    mongodb:
+      index-partitions:
+        group-by: 64
 
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}

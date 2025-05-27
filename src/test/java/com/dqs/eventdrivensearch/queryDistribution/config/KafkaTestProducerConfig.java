@@ -14,19 +14,19 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
 
-@TestConfiguration
+//@TestConfiguration
 public class KafkaTestProducerConfig {
 
-    @Bean
-    public ProducerFactory<String, QueryReceived> producerFactory(EmbeddedKafkaBroker embeddedKafka) {
+//    @Bean
+    public ProducerFactory<String, QueryReceived> testProducerFactory(EmbeddedKafkaBroker embeddedKafka) {
         Map<String, Object> props = new HashMap<>(KafkaTestUtils.producerProps(embeddedKafka));
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return new DefaultKafkaProducerFactory<>(props);
     }
 
-    @Bean
-    public KafkaTemplate<String, QueryReceived> kafkaTemplate(ProducerFactory<String, QueryReceived> producerFactory) {
-        return new KafkaTemplate<>(producerFactory);
+//    @Bean
+    public KafkaTemplate<String, QueryReceived> kafkaTemplate(ProducerFactory<String, QueryReceived> queryReceivedProducerFactory) {
+        return new KafkaTemplate<>(queryReceivedProducerFactory);
     }
 }
