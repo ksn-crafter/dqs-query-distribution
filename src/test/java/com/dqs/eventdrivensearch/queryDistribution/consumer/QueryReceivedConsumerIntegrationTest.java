@@ -1,33 +1,23 @@
 package com.dqs.eventdrivensearch.queryDistribution.consumer;
 
-//import com.dqs.eventdrivensearch.queryDistribution.config.KafkaProducerConfiguration;
+
 import com.dqs.eventdrivensearch.queryDistribution.config.KafkaTestProducerConfig;
 import com.dqs.eventdrivensearch.queryDistribution.event.QueryReceived;
 import com.dqs.eventdrivensearch.queryDistribution.model.QueryStatus;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.core.ProducerFactory;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
 import org.springframework.kafka.test.context.EmbeddedKafka;
-import org.springframework.kafka.test.utils.KafkaTestUtils;
 import org.springframework.test.context.ActiveProfiles;
 import com.dqs.eventdrivensearch.queryDistribution.service.QueryDescriptionService;
 import com.dqs.eventdrivensearch.queryDistribution.model.QueryDescription;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.TestPropertySource;
+
 
 import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertEquals;
