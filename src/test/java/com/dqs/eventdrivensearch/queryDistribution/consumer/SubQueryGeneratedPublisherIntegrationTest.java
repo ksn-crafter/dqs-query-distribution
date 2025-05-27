@@ -1,8 +1,7 @@
 package com.dqs.eventdrivensearch.queryDistribution.consumer;
 
-import com.dqs.eventdrivensearch.queryDistribution.config.KafkaTestProducerConfig;
 import com.dqs.eventdrivensearch.queryDistribution.event.SubQueryGenerated;
-import com.dqs.eventdrivensearch.queryDistribution.publisher.SubqueryGeneratedPublisher;
+import com.dqs.eventdrivensearch.queryDistribution.publisher.SubQueryGeneratedPublisher;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
@@ -29,17 +27,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @EmbeddedKafka(partitions = 1, topics = "subqueries_jpmc")
 public class SubQueryGeneratedPublisherIntegrationTest {
-    @Autowired
-    private EmbeddedKafkaBroker embeddedKafka;
 
     @Autowired
-    private SubqueryGeneratedPublisher publisher;
-
+    private EmbeddedKafkaBroker embeddedKafkaBroker;
+    @Autowired
+    private SubQueryGeneratedPublisher publisher;
     private Consumer<String, SubQueryGenerated> consumer;
+
 
     @BeforeAll
     void setupConsumer() {
-        Map<String, Object> props = new HashMap<>(KafkaTestUtils.consumerProps("testGroup", "true", embeddedKafka));
+        Map<String, Object> props = new HashMap<>(KafkaTestUtils.consumerProps("testGroup", "true", embeddedKafkaBroker));
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
@@ -47,7 +45,7 @@ public class SubQueryGeneratedPublisherIntegrationTest {
         DefaultKafkaConsumerFactory<String, SubQueryGenerated> consumerFactory = new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(SubQueryGenerated.class, false));
 
         consumer = consumerFactory.createConsumer();
-        embeddedKafka.consumeFromAnEmbeddedTopic(consumer, "subqueries_jpmc");
+        embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, "subqueries_jpmc");
     }
 
     @AfterAll
@@ -57,10 +55,8 @@ public class SubQueryGeneratedPublisherIntegrationTest {
 
     @Test
     void publishQueryReceived() {
-        String subqueryId = UUID.randomUUID().toString();
-        String queryId = UUID.randomUUID().toString();
         List<String> partitionIds = Arrays.asList("p-1", "p-2", "p-3", "p-4");
-        SubQueryGenerated event = new SubQueryGenerated(subqueryId, queryId, "jpmc", partitionIds, 4);
+        SubQueryGenerated event = new SubQueryGenerated(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "jpmc", partitionIds, 4);
 
         publisher.publish(event);
 

@@ -1,10 +1,10 @@
 spring:
   application:
-    name: testApp
+    name: queryDistribution
   data:
     mongodb:
       index-partitions:
-        group-by: 64
+        group-by: 2
 
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+#    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}

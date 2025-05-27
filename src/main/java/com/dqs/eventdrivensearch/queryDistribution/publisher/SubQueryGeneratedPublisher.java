@@ -5,13 +5,14 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SubqueryGeneratedPublisher {
+public class SubQueryGeneratedPublisher {
+
 
     private final KafkaTemplate<String, SubQueryGenerated> kafkaTemplate;
 
     private static final String topicPrefix = "subqueries_";
 
-    public SubqueryGeneratedPublisher(KafkaTemplate<String, SubQueryGenerated> kafkaTemplate) {
+    public SubQueryGeneratedPublisher(KafkaTemplate<String, SubQueryGenerated> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 

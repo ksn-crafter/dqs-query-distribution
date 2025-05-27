@@ -57,4 +57,5 @@ public class QueryReceived {
     public LocalDateTime creationTime() {
         return creationTime;
     }
+
 }
