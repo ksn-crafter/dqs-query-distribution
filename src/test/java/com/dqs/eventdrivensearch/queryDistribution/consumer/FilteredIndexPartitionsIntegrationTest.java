@@ -36,28 +36,29 @@ public class FilteredIndexPartitionsIntegrationTest {
         List<IndexPartition> partitions = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
+            int year = 2010 + (i % 5);
+
             partitions.add(new IndexPartition(
                     "partition-" + i,
                     "tenant1",
-                    "/path/to/file" + i,
-                    2010 + (i % 5), // yearStart from 2010 to 2014
-                    2010 + (i % 5)
+                    "/path/to/file-" + i + "(" + year + ")",
+                    year,
+                    year
             ));
         }
 
         mongoTemplate.insertAll(partitions);
 
+        List<List<String>> actualFilePathsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
+        assertNotNull(actualFilePathsBySubQuery);
 
-        List<List<String>> actualPartitionIdsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
-        assertNotNull(actualPartitionIdsBySubQuery);
+        List<List<String>> expectedFilePathsBySubQuery = List.of(
+                List.of("/path/to/file-1(2011)", "/path/to/file-2(2012)"),
+                List.of("/path/to/file-3(2013)", "/path/to/file-6(2011)"),
+                List.of("/path/to/file-7(2012)", "/path/to/file-8(2013)"));
 
-        List<List<String>> expectedPartitionIdsBySubQuery = List.of(
-                List.of("partition-1", "partition-2"),
-                List.of("partition-3", "partition-6"),
-                List.of("partition-7", "partition-8"));
-
-        assertEquals(3, actualPartitionIdsBySubQuery.size());
-        assertEquals(expectedPartitionIdsBySubQuery, actualPartitionIdsBySubQuery);
+        assertEquals(3, actualFilePathsBySubQuery.size());
+        assertEquals(expectedFilePathsBySubQuery, actualFilePathsBySubQuery);
     }
 
     @Test
@@ -65,29 +66,30 @@ public class FilteredIndexPartitionsIntegrationTest {
         List<IndexPartition> partitions = new ArrayList<>();
 
         for (int i = 0; i < 12; i++) {
+            int year = 2010 + (i % 5);
+
             partitions.add(new IndexPartition(
                     "partition-" + i,
                     "tenant1",
-                    "/path/to/file" + i,
-                    2010 + (i % 5), // yearStart from 2010 to 2014
-                    2010 + (i % 5)
+                    "/path/to/file-" + i + "(" + year + ")",
+                    year,
+                    year
             ));
         }
 
         mongoTemplate.insertAll(partitions);
 
+        List<List<String>> actualFilePathsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
+        assertNotNull(actualFilePathsBySubQuery);
 
-        List<List<String>> actualPartitionIdsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
-        assertNotNull(actualPartitionIdsBySubQuery);
-
-        List<List<String>> expectedPartitionIdsBySubQuery = List.of(
-                List.of("partition-1", "partition-2"),
-                List.of("partition-3", "partition-6"),
-                List.of("partition-7", "partition-8"),
-                List.of("partition-11")
+        List<List<String>> expectedFilePathsBySubQuery = List.of(
+                List.of("/path/to/file-1(2011)", "/path/to/file-2(2012)"),
+                List.of("/path/to/file-3(2013)", "/path/to/file-6(2011)"),
+                List.of("/path/to/file-7(2012)", "/path/to/file-8(2013)"),
+                List.of("/path/to/file-11(2011)")
                 );
 
-        assertEquals(4, actualPartitionIdsBySubQuery.size());
-        assertEquals(expectedPartitionIdsBySubQuery, actualPartitionIdsBySubQuery);
+        assertEquals(4, actualFilePathsBySubQuery.size());
+        assertEquals(expectedFilePathsBySubQuery, actualFilePathsBySubQuery);
     }
 }

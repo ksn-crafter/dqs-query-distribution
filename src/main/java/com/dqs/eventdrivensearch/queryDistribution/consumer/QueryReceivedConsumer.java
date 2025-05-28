@@ -8,7 +8,6 @@ import com.dqs.eventdrivensearch.queryDistribution.publisher.SubQueryGeneratedPu
 import com.dqs.eventdrivensearch.queryDistribution.service.IndexPartitionService;
 import com.dqs.eventdrivensearch.queryDistribution.service.QueryDescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
@@ -25,9 +24,7 @@ public class QueryReceivedConsumer {
     @Autowired
     private SubQueryGeneratedPublisher subQueryPublisher;
 
-    @KafkaListener(topicPattern="incoming_queries_.*", groupId = "${spring.application.name}")
     public void receive(QueryReceived event) {
-        System.out.println(">>> Received event: ***********************************************************************" + event);
         QueryDescription queryDescription = new QueryDescription(event);
         queryDescriptionService.createQueryDescription(queryDescription);
         generateSubQuery(event.queryId(), new QueryFilter(event.tenantId(), event.yearStart(), event.yearEnd()));
