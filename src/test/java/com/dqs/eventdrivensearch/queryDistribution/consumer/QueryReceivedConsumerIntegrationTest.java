@@ -50,7 +50,7 @@ public class QueryReceivedConsumerIntegrationTest {
     }
 
     @Test
-    void consumeQueryReceived() throws InterruptedException {
+    void consumeQueryReceived() {
         UUID queryId = UUID.randomUUID();
         QueryReceived event = new QueryReceived(queryId.toString(), "jpmc", "HISTORICAL", 2001, 2002, LocalDateTime.of(2024, 5, 24, 10, 15, 30));
         kafkaTemplate.send("incoming_queries_jpmc", event);
