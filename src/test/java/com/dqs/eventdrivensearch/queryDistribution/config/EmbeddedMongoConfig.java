@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EmbeddedMongoConfig {
 
-    private MongodExecutable mongodExecutable;
-
     @Bean(destroyMethod = "stop")
     public MongodExecutable embeddedMongoServer() throws Exception {
         MongodConfig mongodConfig = MongodConfig.builder()
@@ -22,7 +20,7 @@ public class EmbeddedMongoConfig {
                 .build();
 
         MongodStarter starter = MongodStarter.getDefaultInstance();
-        mongodExecutable = starter.prepare(mongodConfig);
+        MongodExecutable mongodExecutable = starter.prepare(mongodConfig);
         mongodExecutable.start();
 
         return mongodExecutable;
