@@ -1,6 +1,7 @@
 package com.dqs.eventdrivensearch.queryDistribution.publisher;
 
 import com.dqs.eventdrivensearch.queryDistribution.event.SubQueryGenerated;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -8,13 +9,10 @@ import org.springframework.stereotype.Component;
 public class SubQueryGeneratedPublisher {
 
 
-    private final KafkaTemplate<String, SubQueryGenerated> kafkaTemplate;
+    @Autowired
+    private KafkaTemplate<String, SubQueryGenerated> kafkaTemplate;
 
     private static final String topicPrefix = "subqueries_";
-
-    public SubQueryGeneratedPublisher(KafkaTemplate<String, SubQueryGenerated> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
 
     public void publish(SubQueryGenerated event) {
         kafkaTemplate.send(topicNameFor(event.tenantId()), event);

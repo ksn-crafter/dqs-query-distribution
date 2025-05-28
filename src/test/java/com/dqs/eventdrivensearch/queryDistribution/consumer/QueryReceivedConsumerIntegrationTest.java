@@ -1,6 +1,7 @@
 package com.dqs.eventdrivensearch.queryDistribution.consumer;
 
 
+import com.dqs.eventdrivensearch.queryDistribution.config.KafkaTestConsumerConfig;
 import com.dqs.eventdrivensearch.queryDistribution.config.KafkaTestProducerConfig;
 import com.dqs.eventdrivensearch.queryDistribution.event.QueryReceived;
 import com.dqs.eventdrivensearch.queryDistribution.model.QueryStatus;
@@ -28,9 +29,9 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@EmbeddedKafka(partitions = 1, topics = "incoming_queries_jpmc")
+@EmbeddedKafka(partitions = 1, topics = {"subqueries_jpmc", "incoming_queries_jpmc"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@Import({KafkaTestProducerConfig.class})
+@Import({KafkaTestProducerConfig.class, KafkaTestConsumerConfig.class})
 public class QueryReceivedConsumerIntegrationTest {
 
     @Autowired

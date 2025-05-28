@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@EmbeddedKafka(partitions = 1, topics = "subqueries_jpmc")
+@EmbeddedKafka(partitions = 1, topics = {"subqueries_jpmc", "incoming_queries_jpmc"})
 public class SubQueryGeneratedPublisherIntegrationTest {
 
     @Autowired

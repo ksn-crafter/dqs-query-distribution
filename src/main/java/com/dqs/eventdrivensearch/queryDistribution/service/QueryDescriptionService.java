@@ -18,6 +18,7 @@ public class QueryDescriptionService {
         return repository.save(queryDescription);
     }
 
+    @Transactional(readOnly = true)
     public QueryDescription getQueryDescriptionById(UUID queryId) {
         return repository.findById(queryId).orElse(null);
     }

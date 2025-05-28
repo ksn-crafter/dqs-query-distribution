@@ -5,6 +5,3 @@ spring:
     mongodb:
       index-partitions:
         group-by: 2
-
-  kafka:
-#    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
