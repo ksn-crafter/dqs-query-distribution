@@ -9,28 +9,28 @@ public class QueryReceived {
     private String queryId;
 
     @JsonProperty
-    private String tenantId;
+    private String tenant;
 
     @JsonProperty
     private String term;
 
     @JsonProperty
-    private int yearStart;
+    private int beginYear;
 
     @JsonProperty
-    private int yearEnd;
+    private int endYear;
 
     @JsonProperty
     private LocalDateTime creationTime;
 
     public QueryReceived() {}
 
-    public QueryReceived(String queryId, String tenantId, String term, int yearStart, int yearEnd, LocalDateTime creationTime) {
+    public QueryReceived(String queryId, String tenant, String term, int beginYear, int endYear, LocalDateTime creationTime) {
         this.queryId = queryId;
-        this.tenantId = tenantId;
+        this.tenant = tenant;
         this.term = term;
-        this.yearStart = yearStart;
-        this.yearEnd = yearEnd;
+        this.beginYear = beginYear;
+        this.endYear = endYear;
         this.creationTime = creationTime;
     }
 
@@ -39,7 +39,7 @@ public class QueryReceived {
     }
 
     public String tenantId() {
-        return tenantId;
+        return tenant;
     }
 
     public String term() {
@@ -47,11 +47,11 @@ public class QueryReceived {
     }
 
     public int yearStart() {
-        return yearStart;
+        return beginYear;
     }
 
     public int yearEnd() {
-        return yearEnd;
+        return endYear;
     }
 
     public LocalDateTime creationTime() {

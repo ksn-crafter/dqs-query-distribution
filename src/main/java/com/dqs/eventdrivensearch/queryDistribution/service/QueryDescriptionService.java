@@ -5,7 +5,6 @@ import com.dqs.eventdrivensearch.queryDistribution.repository.QueryDescriptionRe
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.UUID;
 
 @Service
 public class QueryDescriptionService {
@@ -19,7 +18,7 @@ public class QueryDescriptionService {
     }
 
     @Transactional(readOnly = true)
-    public QueryDescription getQueryDescriptionById(UUID queryId) {
+    public QueryDescription getQueryDescriptionById(String queryId) {
         return repository.findById(queryId).orElse(null);
     }
 }

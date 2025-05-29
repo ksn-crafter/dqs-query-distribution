@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@EmbeddedKafka(partitions = 1, topics = {"subqueries_jpmc", "incoming_queries_jpmc"})
+@EmbeddedKafka(partitions = 1, topics = {"incoming_sub_queries_jpmc", "incoming_queries_jpmc"})
 public class SubQueryGeneratedPublisherIntegrationTest {
 
     @Autowired
@@ -45,7 +45,7 @@ public class SubQueryGeneratedPublisherIntegrationTest {
         DefaultKafkaConsumerFactory<String, SubQueryGenerated> consumerFactory = new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(SubQueryGenerated.class, false));
 
         consumer = consumerFactory.createConsumer();
-        embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, "subqueries_jpmc");
+        embeddedKafkaBroker.consumeFromAnEmbeddedTopic(consumer, "incoming_sub_queries_jpmc");
     }
 
     @AfterAll
@@ -60,13 +60,13 @@ public class SubQueryGeneratedPublisherIntegrationTest {
 
         publisher.publish(event);
 
-        ConsumerRecord<String, SubQueryGenerated> record = KafkaTestUtils.getSingleRecord(consumer, "subqueries_jpmc");
+        ConsumerRecord<String, SubQueryGenerated> record = KafkaTestUtils.getSingleRecord(consumer, "incoming_sub_queries_jpmc");
 
         SubQueryGenerated subQueryGenerated = record.value();
         assertEquals(event.subQueryId(), subQueryGenerated.subQueryId());
-        assertEquals(event.tenantId(), subQueryGenerated.tenantId());
+        assertEquals(event.tenant(), subQueryGenerated.tenant());
         assertEquals(event.queryId(), subQueryGenerated.queryId());
-        assertEquals(event.partitionIds(), subQueryGenerated.partitionIds());
-        assertEquals(event.totalSubqueries(), subQueryGenerated.totalSubqueries());
+        assertEquals(event.filePaths(), subQueryGenerated.filePaths());
+        assertEquals(event.totalSubQueries(), subQueryGenerated.totalSubQueries());
     }
 }

@@ -12,22 +12,22 @@ public class SubQueryGenerated {
     private String queryId;
 
     @JsonProperty
-    private String tenantId;
+    private String tenant;
 
     @JsonProperty
-    private List<String> partitionIds;
+    private List<String> filePaths;
 
     @JsonProperty
-    private int totalSubqueries;
+    private int totalSubQueries;
 
     public SubQueryGenerated() { }
 
-    public SubQueryGenerated(String subQueryId, String queryId, String tenantId, List<String> partitionIds, int totalSubqueries) {
+    public SubQueryGenerated(String subQueryId, String queryId, String tenant, List<String> filePaths, int totalSubQueries) {
         this.subQueryId = subQueryId;
         this.queryId = queryId;
-        this.tenantId = tenantId;
-        this.partitionIds = partitionIds;
-        this.totalSubqueries = totalSubqueries;
+        this.tenant = tenant;
+        this.filePaths = filePaths;
+        this.totalSubQueries = totalSubQueries;
     }
 
     public String subQueryId() {
@@ -38,15 +38,15 @@ public class SubQueryGenerated {
         return queryId;
     }
 
-    public String tenantId() {
-        return tenantId;
+    public String tenant() {
+        return tenant;
     }
 
-    public List<String> partitionIds() {
-        return partitionIds;
+    public List<String> filePaths() {
+        return filePaths;
     }
 
-    public int totalSubqueries() {
-        return totalSubqueries;
+    public int totalSubQueries() {
+        return totalSubQueries;
     }
 }

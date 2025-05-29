@@ -12,10 +12,10 @@ public class SubQueryGeneratedPublisher {
     @Autowired
     private KafkaTemplate<String, SubQueryGenerated> kafkaTemplate;
 
-    private static final String topicPrefix = "subqueries_";
+    private static final String topicPrefix = "incoming_sub_queries_";
 
     public void publish(SubQueryGenerated event) {
-        kafkaTemplate.send(topicNameFor(event.tenantId()), event);
+        kafkaTemplate.send(topicNameFor(event.tenant()), event);
     }
 
     static String topicNameFor(String tenant) {

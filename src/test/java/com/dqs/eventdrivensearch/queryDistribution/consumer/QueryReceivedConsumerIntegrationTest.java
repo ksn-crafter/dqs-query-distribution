@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@EmbeddedKafka(partitions = 1, topics = {"subqueries_jpmc", "incoming_queries_jpmc"})
+@EmbeddedKafka(partitions = 1, topics = {"incoming_sub_queries_jpmc", "incoming_queries_jpmc"})
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Import({KafkaTestProducerConfig.class, KafkaTestConsumerConfig.class})
 public class QueryReceivedConsumerIntegrationTest {
@@ -51,8 +51,8 @@ public class QueryReceivedConsumerIntegrationTest {
 
     @Test
     void consumeQueryReceived() {
-        UUID queryId = UUID.randomUUID();
-        QueryReceived event = new QueryReceived(queryId.toString(), "jpmc", "HISTORICAL", 2001, 2002, LocalDateTime.of(2024, 5, 24, 10, 15, 30));
+        String queryId = UUID.randomUUID().toString();
+        QueryReceived event = new QueryReceived(queryId, "jpmc", "HISTORICAL", 2001, 2002, LocalDateTime.of(2024, 5, 24, 10, 15, 30));
         kafkaTemplate.send("incoming_queries_jpmc", event);
 
 

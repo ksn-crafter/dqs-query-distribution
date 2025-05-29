@@ -4,14 +4,13 @@ import com.dqs.eventdrivensearch.queryDistribution.event.QueryReceived;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Document(collection = "queryDescription")
+@Document(collection = "query_descriptions")
 public class QueryDescription {
 
     @Id
-    private UUID queryId;
-    private String tenantId;
+    private String queryId;
+    private String tenant;
     private String term;
     private int yearStart;
     private int yearEnd;
@@ -22,8 +21,8 @@ public class QueryDescription {
     public QueryDescription() {}
 
     public QueryDescription(QueryReceived event) {
-        this.queryId = UUID.fromString(event.queryId());
-        this.tenantId = event.tenantId().toLowerCase();
+        this.queryId = event.queryId();
+        this.tenant = event.tenantId().toLowerCase();
         this.term = event.term();
         this.yearStart = event.yearStart();
         this.yearEnd = event.yearEnd();
@@ -31,12 +30,12 @@ public class QueryDescription {
         this.status = QueryStatus.Acknowledged;
     }
 
-    public UUID queryId() {
+    public String queryId() {
         return queryId;
     }
 
     public String tenantId() {
-        return tenantId;
+        return tenant;
     }
 
     public String term() {
