@@ -55,7 +55,6 @@ public class FilteredIndexPartitionsIntegrationTest {
                 List.of("/path/to/file-3(2013)", "/path/to/file-6(2011)"),
                 List.of("/path/to/file-7(2012)", "/path/to/file-8(2013)"));
 
-        assertEquals(3, actualFilePathsBySubQuery.size());
         assertEquals(expectedFilePathsBySubQuery, actualFilePathsBySubQuery);
     }
 
@@ -87,7 +86,6 @@ public class FilteredIndexPartitionsIntegrationTest {
                 List.of("/path/to/file-11(2011)")
                 );
 
-        assertEquals(4, actualFilePathsBySubQuery.size());
         assertEquals(expectedFilePathsBySubQuery, actualFilePathsBySubQuery);
     }
 }

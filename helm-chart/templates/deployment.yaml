@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-distribution-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: query-distribution
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query-distribution
+  template:
+    metadata:
+      labels:
+        app: query-distribution
+    spec:
+      containers:
+        - name: query-distribution-container
+          image: {{ .Values.imageUri }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: {{ .Values.KAFKA_BOOTSTRAP_SERVERS}}
+            - name: MONGO_DB_URL
+              value: {{ .Values.MONGO_DB_URL}}
+            - name: TENANTS
+              value: {{ .Values.TENANTS}}
+            - name: INDEX_PARTITION_GROUP_BY
+              value: { { .Values.INDEX_PARTITION_GROUP_BY} }
