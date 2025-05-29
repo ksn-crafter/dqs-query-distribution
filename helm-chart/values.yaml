@@ -1,5 +1,5 @@
 #used for deployment
-namespace: dqs-app
+namespace: dqs-query-distribution-app
 imageUri: ''
 
 #used by application
