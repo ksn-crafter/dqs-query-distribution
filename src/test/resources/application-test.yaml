@@ -5,3 +5,4 @@ spring:
     mongodb:
       index-partitions:
         group-by: 2
+tenants: jpmc,deutsche
