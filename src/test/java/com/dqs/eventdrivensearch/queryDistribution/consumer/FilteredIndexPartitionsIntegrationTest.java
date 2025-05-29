@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FilteredIndexPartitionsIntegrationTest {
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+
     @Autowired
     private IndexPartitionService service;
 
     @BeforeEach
     void setUp() {
-        mongoTemplate.dropCollection(IndexPartition.class);
+        service.deleteAll();
 
     }
 
@@ -47,7 +45,7 @@ public class FilteredIndexPartitionsIntegrationTest {
             ));
         }
 
-        mongoTemplate.insertAll(partitions);
+        service.insertAll(partitions);
 
         List<List<String>> actualFilePathsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
         assertNotNull(actualFilePathsBySubQuery);
@@ -77,7 +75,7 @@ public class FilteredIndexPartitionsIntegrationTest {
             ));
         }
 
-        mongoTemplate.insertAll(partitions);
+        service.insertAll(partitions);
 
         List<List<String>> actualFilePathsBySubQuery = service.findIndexPartitions(new QueryFilter("tenant1", 2011, 2013));
         assertNotNull(actualFilePathsBySubQuery);

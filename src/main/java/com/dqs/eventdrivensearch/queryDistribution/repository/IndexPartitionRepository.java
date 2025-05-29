@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IndexPartitionRepository extends MongoRepository<IndexPartition, String> {
+public interface IndexPartitionRepository extends MongoRepository<IndexPartition, String>, IndexPartitionCustomRepository {
 }
