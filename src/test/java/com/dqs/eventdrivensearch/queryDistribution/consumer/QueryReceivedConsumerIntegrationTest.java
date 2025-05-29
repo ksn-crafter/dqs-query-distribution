@@ -61,8 +61,8 @@ public class QueryReceivedConsumerIntegrationTest {
             assertNotNull(queryDescription);
             assertEquals(event.tenantId(), queryDescription.tenantId());
             assertEquals(event.term(), queryDescription.term());
-            assertEquals(event.yearStart(), queryDescription.yearStart());
-            assertEquals(event.yearEnd(), queryDescription.yearEnd());
+            assertEquals(event.beginYear(), queryDescription.yearStart());
+            assertEquals(event.endYear(), queryDescription.yearEnd());
             assertEquals(event.creationTime(), queryDescription.creationTime());
             assertEquals(QueryStatus.Acknowledged, queryDescription.status());
         });

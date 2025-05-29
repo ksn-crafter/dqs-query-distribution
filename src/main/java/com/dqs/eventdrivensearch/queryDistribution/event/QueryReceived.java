@@ -46,11 +46,11 @@ public class QueryReceived {
         return term;
     }
 
-    public int yearStart() {
+    public int beginYear() {
         return beginYear;
     }
 
-    public int yearEnd() {
+    public int endYear() {
         return endYear;
     }
 

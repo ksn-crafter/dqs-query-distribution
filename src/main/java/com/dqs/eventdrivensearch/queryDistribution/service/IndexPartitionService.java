@@ -1,6 +1,6 @@
 package com.dqs.eventdrivensearch.queryDistribution.service;
 
-import com.dqs.eventdrivensearch.queryDistribution.model.IndexPartitionCustomRepository;
+import com.dqs.eventdrivensearch.queryDistribution.repository.IndexPartitionCustomRepository;
 import com.dqs.eventdrivensearch.queryDistribution.model.QueryFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

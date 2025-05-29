@@ -24,8 +24,8 @@ public class QueryDescription {
         this.queryId = event.queryId();
         this.tenant = event.tenantId().toLowerCase();
         this.term = event.term();
-        this.yearStart = event.yearStart();
-        this.yearEnd = event.yearEnd();
+        this.yearStart = event.beginYear();
+        this.yearEnd = event.endYear();
         this.creationTime = event.creationTime();
         this.status = QueryStatus.Acknowledged;
     }

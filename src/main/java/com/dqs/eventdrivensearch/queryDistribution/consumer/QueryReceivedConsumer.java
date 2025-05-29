@@ -27,14 +27,14 @@ public class QueryReceivedConsumer {
     public void receive(QueryReceived event) {
         QueryDescription queryDescription = new QueryDescription(event);
         queryDescriptionService.createQueryDescription(queryDescription);
-        generateSubQuery(event.queryId(), new QueryFilter(event.tenantId(), event.yearStart(), event.yearEnd()));
+        generateSubQuery(event.queryId(), new QueryFilter(event.tenantId(), event.beginYear(), event.endYear()));
     }
 
     public void generateSubQuery(String queryId, QueryFilter filter) {
         List<List<String>> partitions = indexPartitionService.findIndexPartitions(filter);
 
         for(List<String> partition : partitions) {
-            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenantId(), partition, partition.size());
+            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partition.size());
             subQueryPublisher.publish(subQueryGenerated);
         }
     }

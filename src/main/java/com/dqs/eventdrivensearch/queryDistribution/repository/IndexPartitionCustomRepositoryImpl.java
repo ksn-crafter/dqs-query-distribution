@@ -1,6 +1,5 @@
 package com.dqs.eventdrivensearch.queryDistribution.repository;
 
-import com.dqs.eventdrivensearch.queryDistribution.model.IndexPartitionCustomRepository;
 import com.dqs.eventdrivensearch.queryDistribution.model.QueryFilter;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,20 +25,20 @@ public class IndexPartitionCustomRepositoryImpl implements IndexPartitionCustomR
     public List<List<String>> findIndexPartitions(QueryFilter filter) {
         // TODO: 1 partition -> 1 index file -> 1 year of data (MAX)
 
-        MatchOperation match = Aggregation.match(Criteria.where("tenantId").is(filter.tenantId())
+        MatchOperation match = Aggregation.match(Criteria.where("tenant").is(filter.tenant())
                 .and("yearStart").gte(filter.yearStart())
                 .and("yearEnd").lte(filter.yearEnd()));
 
 
-        ProjectionOperation project = Aggregation.project("filepath");
+        ProjectionOperation project = Aggregation.project("filePath");
 
 
         Aggregation aggregation = Aggregation.newAggregation(match, project);
-        AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "indexPartition", Document.class);
+        AggregationResults<Document> results = mongoTemplate.aggregate(aggregation, "index_partitions", Document.class);
 
 
         List<String> allFilePaths = results.getMappedResults().stream()
-                .map(doc -> doc.getString("filepath"))
+                .map(doc -> doc.getString("filePath"))
                 .collect(Collectors.toList());
 
 
