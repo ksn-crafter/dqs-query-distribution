@@ -25,6 +25,7 @@ public class QueryReceivedConsumer {
     private SubQueryGeneratedPublisher subQueryPublisher;
 
     public void receive(QueryReceived event) {
+        System.out.println(event);
         QueryDescription queryDescription = new QueryDescription(event);
         queryDescriptionService.createQueryDescription(queryDescription);
         generateSubQuery(event.queryId(), new QueryFilter(event.tenantId(), event.beginYear(), event.endYear()));
@@ -33,6 +34,7 @@ public class QueryReceivedConsumer {
     public void generateSubQuery(String queryId, QueryFilter filter) {
         List<List<String>> partitions = indexPartitionService.findIndexPartitions(filter);
 
+        System.out.println("queryId: " + queryId + " index file paths grouped as: " + partitions);
         for(List<String> partition : partitions) {
             SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partition.size());
             subQueryPublisher.publish(subQueryGenerated);

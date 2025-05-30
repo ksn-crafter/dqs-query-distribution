@@ -49,4 +49,15 @@ public class SubQueryGenerated {
     public int totalSubQueries() {
         return totalSubQueries;
     }
+
+    @Override
+    public String toString() {
+        return "SubQueryGenerated{" +
+                "subQueryId='" + subQueryId + '\'' +
+                ", queryId='" + queryId + '\'' +
+                ", tenant='" + tenant + '\'' +
+                ", filePaths=" + filePaths +
+                ", totalSubQueries=" + totalSubQueries +
+                '}';
+    }
 }

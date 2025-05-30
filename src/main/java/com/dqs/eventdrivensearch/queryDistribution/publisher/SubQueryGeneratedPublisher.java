@@ -15,6 +15,7 @@ public class SubQueryGeneratedPublisher {
     private static final String topicPrefix = "incoming_sub_queries_";
 
     public void publish(SubQueryGenerated event) {
+        System.out.println(event);
         kafkaTemplate.send(topicNameFor(event.tenant()), event);
     }
 

@@ -58,4 +58,16 @@ public class QueryReceived {
         return creationTime;
     }
 
+
+    @Override
+    public String toString() {
+        return "QueryReceived{" +
+                "queryId='" + queryId + '\'' +
+                ", tenant='" + tenant + '\'' +
+                ", term='" + term + '\'' +
+                ", beginYear=" + beginYear +
+                ", endYear=" + endYear +
+                ", creationTime=" + creationTime +
+                '}';
+    }
 }
