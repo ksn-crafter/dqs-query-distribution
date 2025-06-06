@@ -34,7 +34,6 @@ public class QueryReceivedConsumer {
     public void generateSubQuery(String queryId, QueryFilter filter) {
         List<List<String>> partitions = indexPartitionService.findIndexPartitions(filter);
 
-        System.out.println("queryId: " + queryId + " index file paths grouped as: " + partitions);
         for(List<String> partition : partitions) {
             SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partitions.size());
             subQueryPublisher.publish(subQueryGenerated);
