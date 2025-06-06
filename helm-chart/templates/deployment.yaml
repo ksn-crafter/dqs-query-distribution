@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: query-distribution-deployment
-  namespace: {{ .Values.TENANTS }}
+  namespace: {{ printf "%s-%s" .Values.namespace .Values.TENANTS }}
   labels:
     app: query-distribution
 spec:
@@ -15,6 +15,7 @@ spec:
       labels:
         app: query-distribution
     spec:
+      serviceAccountName: {{ .Values.serviceAccountName }}
       containers:
         - name: query-distribution-container
           image: {{ .Values.IMAGE_URI }}
@@ -29,4 +30,4 @@ spec:
             - name: TENANTS
               value: {{ .Values.TENANTS}}
             - name: INDEX_PARTITION_GROUP_BY
-              value: { { .Values.INDEX_PARTITION_GROUP_BY} }
+              value: "{{ .Values.INDEX_PARTITION_GROUP_BY}}"

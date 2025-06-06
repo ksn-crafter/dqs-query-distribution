@@ -36,7 +36,7 @@ public class QueryReceivedConsumer {
 
         System.out.println("queryId: " + queryId + " index file paths grouped as: " + partitions);
         for(List<String> partition : partitions) {
-            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partition.size());
+            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partitions.size());
             subQueryPublisher.publish(subQueryGenerated);
         }
     }

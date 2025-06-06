@@ -56,7 +56,6 @@ public class SubQueryGenerated {
                 "subQueryId='" + subQueryId + '\'' +
                 ", queryId='" + queryId + '\'' +
                 ", tenant='" + tenant + '\'' +
-                ", filePaths=" + filePaths +
                 ", totalSubQueries=" + totalSubQueries +
                 '}';
     }
