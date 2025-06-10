@@ -32,11 +32,13 @@ public class QueryReceivedConsumer {
     }
 
     public void generateSubQuery(String queryId, QueryFilter filter) {
-        List<List<String>> partitions = indexPartitionService.findIndexPartitions(filter);
+        List<List<String>> indexPartitions = indexPartitionService.findIndexPartitions(filter);
 
-        for(List<String> partition : partitions) {
-            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), partition, partitions.size());
-            subQueryPublisher.publish(subQueryGenerated);
+        System.out.printf("partition size " + indexPartitions.size());
+
+        for (int i = 0; i < indexPartitions.size(); i++) {
+            SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), indexPartitions.get(i), indexPartitions.size());
+            subQueryPublisher.publish(subQueryGenerated, i % 50);
         }
     }
 }

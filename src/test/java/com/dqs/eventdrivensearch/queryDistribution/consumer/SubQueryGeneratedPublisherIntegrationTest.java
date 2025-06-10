@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@EmbeddedKafka(partitions = 125, topics = {"incoming_sub_queries_jpmc", "incoming_queries_jpmc"})
+@EmbeddedKafka(partitions = 1, topics = {"incoming_sub_queries_jpmc", "incoming_queries_jpmc"})
 public class SubQueryGeneratedPublisherIntegrationTest {
 
     @Autowired
@@ -58,7 +58,7 @@ public class SubQueryGeneratedPublisherIntegrationTest {
         List<String> partitionIds = Arrays.asList("p-1", "p-2", "p-3", "p-4");
         SubQueryGenerated event = new SubQueryGenerated(UUID.randomUUID().toString(), UUID.randomUUID().toString(), "jpmc", partitionIds, 4);
 
-        publisher.publish(event);
+        publisher.publish(event, 0);
 
         ConsumerRecord<String, SubQueryGenerated> record = KafkaTestUtils.getSingleRecord(consumer, "incoming_sub_queries_jpmc");
 

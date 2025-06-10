@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: query-distribution-deployment
+  name: {{ printf "query-distribution-deployment-%s" .Values.TENANTS }}
   namespace: {{ printf "%s-%s" .Values.namespace .Values.TENANTS }}
   labels:
     app: query-distribution
 spec:
-  replicas: {{.Values.NUMBER_OF_WORKERS}}
+  replicas: {{.Values.NUMBER_OF_WORKERS}}-tenants
   selector:
     matchLabels:
       app: query-distribution
@@ -15,7 +15,9 @@ spec:
       labels:
         app: query-distribution
     spec:
-      serviceAccountName: {{ .Values.serviceAccountName }}
+      serviceAccountName: {{ printf "dqs-query-distribution-%s-service-account" .Values.TENANTS}}
+      nodeSelector:
+        kubernetes.io/arch: arm64
       containers:
         - name: query-distribution-container
           image: {{ .Values.IMAGE_URI }}
