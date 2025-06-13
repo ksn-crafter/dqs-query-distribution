@@ -8,12 +8,16 @@ import com.dqs.eventdrivensearch.queryDistribution.publisher.SubQueryGeneratedPu
 import com.dqs.eventdrivensearch.queryDistribution.service.IndexPartitionService;
 import com.dqs.eventdrivensearch.queryDistribution.service.QueryDescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.UUID;
 
 @Component
 public class QueryReceivedConsumer {
+
+    @Value("${incoming-sub-queries-partitions}")
+    private int numberOfPartitions;
 
     @Autowired
     private QueryDescriptionService queryDescriptionService;
@@ -38,7 +42,7 @@ public class QueryReceivedConsumer {
 
         for (int i = 0; i < indexPartitions.size(); i++) {
             SubQueryGenerated subQueryGenerated = new SubQueryGenerated(UUID.randomUUID().toString(), queryId, filter.tenant(), indexPartitions.get(i), indexPartitions.size());
-            subQueryPublisher.publish(subQueryGenerated, i % 50);
+            subQueryPublisher.publish(subQueryGenerated, i % numberOfPartitions);
         }
     }
 }

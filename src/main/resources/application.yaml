@@ -5,7 +5,7 @@ spring:
     mongodb:
       uri: ${MONGO_DB_URL:mongodb://localhost:27017/dqs}
       index-partitions:
-        group-by: ${INDEX_PARTITION_GROUP_BY:64}
+        group-by: ${INDEX_PARTITION_GROUP_BY:32}
 
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
@@ -17,3 +17,4 @@ spring:
         sasl.client.callback.handler.class: software.amazon.msk.auth.iam.IAMClientCallbackHandler
 
 tenants: ${TENANTS}
+incoming-sub-queries-partitions: ${NUMBER_OF_PARTITIONS:1}
