@@ -43,8 +43,12 @@ public class IndexPartitionCustomRepositoryImpl implements IndexPartitionCustomR
 
 
         List<List<String>> filePaths = new ArrayList<>();
-        for (int i = 0; i < allFilePaths.size(); i += batchSize) {
-            filePaths.add(allFilePaths.subList(i, Math.min(i + batchSize, allFilePaths.size())));
+//        for (int i = 0; i < allFilePaths.size(); i += batchSize) {
+//            filePaths.add(allFilePaths.subList(i, Math.min(i + batchSize, allFilePaths.size())));
+//        }
+
+        for (int i = 0; i < 125; i++){
+            filePaths.add(allFilePaths);
         }
 
         return filePaths;
