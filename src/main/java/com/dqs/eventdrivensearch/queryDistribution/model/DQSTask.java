@@ -11,5 +11,9 @@ public record DQSTask(
     String status,
     int workerId,
     long creationTimestamp,
-    Long completionTimeStamp
+    Long completionTimeStamp,
+    String queryText,
+    String splitId,
+    long footerOffsetsStart,
+    long footerOffsetsEnd
 ) {}

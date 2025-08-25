@@ -43,7 +43,11 @@ public class DQSTaskService {
                         "Pending",
                         assignedWorkerId,
                         System.currentTimeMillis(),
-                        null
+                        null,
+                        queryDescription.term(),
+                        splitMetadata.splitId(),
+                        splitMetadata.footerOffsetsStart(),
+                        splitMetadata.footerOffsetsEnd()
                 );
 
                 tasks.add(task);
