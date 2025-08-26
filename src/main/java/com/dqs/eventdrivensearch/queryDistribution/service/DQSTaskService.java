@@ -8,6 +8,7 @@ import com.dqs.eventdrivensearch.queryDistribution.model.DQSTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,8 +24,7 @@ public class DQSTaskService {
     @Value("${worker_count_for_dqs_task}")
     private int numberOfWorkers;
 
-
-
+    @Transactional
     public void generateDQSTask(QueryDescription queryDescription) {
 
         List<DQSSplitMetadata> splitMetadataList = splitMetadataRepository.findByTenantId(queryDescription.tenantId());
