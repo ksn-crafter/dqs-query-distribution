@@ -54,11 +54,11 @@ public class DQSTaskService {
 
                 workerId++;
 
-                if (tasks.size() >= numberOfWorkers) {
-                    taskRepository.saveAll(tasks);
-                    tasks.clear();
-                    workerId = 0;
-                }
+//                if (tasks.size() >= numberOfWorkers) {
+//                    taskRepository.saveAll(tasks);
+//                    tasks.clear();
+//                    workerId = 0;
+//                }
             }
 
             if (!tasks.isEmpty()) {
