@@ -9,29 +9,29 @@ metadata:
   name: {{ printf "query-distribution-deployment-%s" . }}
   namespace: {{ printf "%s-%s" $.Values.namespace . }}
   labels:
-    app: query-distribution
+    app: query-distribution-quickwit
 spec:
   replicas: {{ $.Values.NUMBER_OF_WORKERS }}
   selector:
     matchLabels:
-      app: query-distribution
+      app: query-distribution-quickwit
   template:
     metadata:
       labels:
-        app: query-distribution
+        app: query-distribution-quickwit
     spec:
       serviceAccountName: {{ printf "dqs-query-distribution-%s-service-account" . }}
       nodeSelector:
         kubernetes.io/arch: arm64
       containers:
-        - name: query-distribution-container
+        - name: query-distribution-quickwit-container
           image: {{ $.Values.IMAGE_URI }}
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
-            - name: NUMBER_OF_PARTITIONS
-              value: "{{ $partitions }}"
+#            - name: NUMBER_OF_PARTITIONS
+#              value: "{{ $partitions }}"
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: {{ $.Values.KAFKA_BOOTSTRAP_SERVERS }}
             - name: MONGO_DB_URL
@@ -40,5 +40,7 @@ spec:
               value: {{ . }}
             - name: INDEX_PARTITION_GROUP_BY
               value: "{{ $.Values.INDEX_PARTITION_GROUP_BY }}"
+            - name: WORKER_COUNT_FOR_DQS_TASK
+              value: "{{ $.Values.WORKER_COUNT_FOR_DQS_TASK }}"
 ---
 {{- end }}

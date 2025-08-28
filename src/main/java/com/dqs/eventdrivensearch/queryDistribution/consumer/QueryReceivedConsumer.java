@@ -33,19 +33,12 @@ public class QueryReceivedConsumer {
     @Autowired
     private DQSTaskService dqsTaskService;
 
-    @Value("${use_dqs_task:false}")
-    private boolean useDqsTask;
 
     public void receive(QueryReceived event) {
         System.out.println(event);
         QueryDescription queryDescription = new QueryDescription(event);
         queryDescriptionService.createQueryDescription(queryDescription);
-
-        if (useDqsTask) {
-            dqsTaskService.generateDQSTask(queryDescription);
-        } else {
-            generateSubQuery(event.queryId(), new QueryFilter(event.tenantId(), event.beginYear(), event.endYear()));
-        }
+        dqsTaskService.generateDQSTask(queryDescription);
     }
 
     public void generateSubQuery(String queryId, QueryFilter filter) {
